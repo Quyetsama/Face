@@ -4,7 +4,7 @@ var sendMesUser
 //     token: getCookie('token'),
 //     username: getCookie('username') 
 // };
-//...
+
 // socket.on('session', (session) => {
 //     localStorage.setItem("sessionID", session);
 // })
