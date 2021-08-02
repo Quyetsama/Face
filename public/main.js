@@ -1,4 +1,4 @@
-const socket = io('http://localhost:3000')
+const socket = io('https://face-book-chat.herokuapp.com/')
 var sendMesUser
 // socket.auth = { 
 //     token: getCookie('token'),
