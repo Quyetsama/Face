@@ -1,0 +1,78 @@
+<%- include('partials/header'); -%>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <h1 style="margin-top: 100px;">Login</h1>
+    <div class="mt-4">
+        <!-- <form action="/login" method="POST"> -->
+            <div class="form-group mt-4">
+                <label for="exampleInputPassword1">Username</label>
+                <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+              </div>
+            <div class="form-group mt-4">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+            </div>
+            <button onclick="login()" class="btn btn-primary mt-4">Login</button>
+            <a href="/register">Register</a>
+          <!-- </form> -->
+    </div>
+
+
+    <script>
+
+      function setCookie(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        let expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      }
+
+
+      function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      function login(){
+        $.ajax({
+          url: '/login', 
+          type: 'POST',
+          data: {
+              username: $('#username').val(),
+              password: $('#password').val()
+          }
+        })
+        .then(data => {
+          // console.log(data);
+          if(data.message == "login success"){
+            setCookie('token', data.token, 1);
+            setCookie('username', data.username, 1);
+            // chuyen den trang chu
+            window.location.href = "/";
+          }
+          else{
+            alert("Tài khoản hoặc mật khẩu không đúng!");
+          }
+            
+        })
+        .catch(error => {
+            alert("Tài khoản hoặc mật khẩu không đúng!");
+        })
+      }
+    </script>
+
+
+
+<%- include('partials/footer'); -%>
