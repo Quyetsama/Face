@@ -23,11 +23,14 @@ socket.on('server-send-users', (users) => {
         $('.vertical-menu').append('<a href="#" class="'+ user +'">'+ user +'</a>')
         // Thêm event click
         $('body').on('click','.'+ user +'',function(){
+            $('.chat-form').show()
             sendMesUser = user
+            $('.user-chat').html(''+ user +'')
         })
     });
 })
 
+// hien thi mess cua chinh minh
 socket.on('server-send-msg-for-me', (data) => {
     var item = $(`
           <article class="msg-container msg-self" id="msg-0">
@@ -68,12 +71,20 @@ socket.on('server-send-message', (data) => {
 
     // auto sua senduser thanh nguoi gui
     sendMesUser = data.from
+    $('.user-chat').html(''+ data.from +'')
+    $('.chat-form').show()
     // $('#listMessages').append('<div class="you">'+ data.from +': '+ data.message +'</div><br><br>')
 })
 
 
 
 $(document).ready(() => {
+    $('.chat-form').hide()
+    $('.close-chat').click(() => {
+        $('.chat-form').hide()
+    })
+
+
     $('#currentUser').html(getCookie('username'))
 
 
